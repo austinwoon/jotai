@@ -144,7 +144,7 @@ export const useTodoMutation = () => {
   const queryClient = useQueryClient()
 
   return useMutation(
-    async (body: todo) => {
+    async (body) => {
       await fetch('/todo', { Method: 'POST', Body: body })
     },
     {
