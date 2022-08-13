@@ -1,6 +1,10 @@
 import { atom } from 'jotai'
-import type { Atom, SetStateAction, WritableAtom } from 'jotai'
-import { SetStateActionFunc } from 'jotai/core/atom'
+import type {
+  Atom,
+  SetStateAction,
+  SetStateActionFunc,
+  WritableAtom,
+} from 'jotai'
 import { RESET } from './constants'
 
 type Read<Value> = Atom<Value>['read']

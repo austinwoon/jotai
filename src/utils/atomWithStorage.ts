@@ -1,6 +1,5 @@
-import { SetStateAction, atom } from 'jotai'
-import type { WritableAtom } from 'jotai'
-import { SetStateActionFunc } from 'jotai/core/atom'
+import { atom } from 'jotai'
+import type { SetStateAction, SetStateActionFunc, WritableAtom } from 'jotai'
 import { RESET } from './constants'
 
 type Unsubscribe = () => void
