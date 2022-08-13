@@ -1,12 +1,26 @@
-import { atom } from 'jotai'
+import { SetStateAction, atom } from 'jotai'
 import type { WritableAtom } from 'jotai'
+import { SetStateActionFunc } from 'jotai/core/atom'
 import { RESET } from './constants'
 
 type Unsubscribe = () => void
 
-type SetStateActionFunc<Value> = (prev: Value) => Value | typeof RESET
+type ReplaceReturnType<T extends (...a: any) => any, TNewReturn> = (
+  ...a: Parameters<T>
+) => TNewReturn
 
-type StorageSetStateAction<Value> = Value | SetStateActionFunc<Value>
+type ResetFuncReturnType<Value> =
+  | ReturnType<SetStateActionFunc<Value>>
+  | typeof RESET
+
+type ResetSetStateActionFunc<Value> = ReplaceReturnType<
+  SetStateActionFunc<Value>,
+  ResetFuncReturnType<Value>
+>
+
+type StorageSetStateAction<Value> =
+  | SetStateAction<Value>
+  | ResetSetStateActionFunc<Value>
 
 export interface AsyncStorage<Value> {
   getItem: (key: string) => Promise<Value>
@@ -164,7 +178,7 @@ export function atomWithStorage<Value>(
 
       const newValue =
         typeof update === 'function'
-          ? (update as SetStateActionFunc<Value>)(get(baseAtom))
+          ? (update as ResetSetStateActionFunc<Value>)(get(baseAtom))
           : update
 
       if (newValue === RESET) {

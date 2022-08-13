@@ -1,5 +1,6 @@
 import { atom } from 'jotai'
 import type { Atom, SetStateAction, WritableAtom } from 'jotai'
+import { SetStateActionFunc } from 'jotai/core/atom'
 import { RESET } from './constants'
 
 type Read<Value> = Atom<Value>['read']
@@ -35,7 +36,7 @@ export function atomWithDefault<Value>(getDefault: Read<Value>) {
         return set(
           overwrittenAtom,
           typeof update === 'function'
-            ? (update as (prev: Value) => Value)(get(anAtom))
+            ? (update as SetStateActionFunc<Value>)(get(anAtom))
             : update
         )
       }

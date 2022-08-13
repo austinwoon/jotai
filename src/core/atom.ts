@@ -74,7 +74,9 @@ export interface WritableAtom<
   onMount?: OnMount<Update, Result>
 }
 
-type SetStateAction<Value> = Value | ((prev: Value) => Value)
+export type SetStateActionFunc<Value> = (prev: Value) => Value
+
+type SetStateAction<Value> = Value | SetStateActionFunc<Value>
 
 export type PrimitiveAtom<Value> = WritableAtom<Value, SetStateAction<Value>>
 

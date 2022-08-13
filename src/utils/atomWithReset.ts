@@ -1,5 +1,6 @@
 import { atom } from 'jotai'
 import type { SetStateAction, WritableAtom } from 'jotai'
+import { SetStateActionFunc } from 'jotai/core/atom'
 import { RESET } from './constants'
 
 export function atomWithReset<Value>(initialValue: Value) {
@@ -11,7 +12,7 @@ export function atomWithReset<Value>(initialValue: Value) {
       set(
         anAtom,
         typeof update === 'function'
-          ? (update as (prev: Value) => Value)(get(anAtom))
+          ? (update as SetStateActionFunc<Value>)(get(anAtom))
           : update
       )
     }
