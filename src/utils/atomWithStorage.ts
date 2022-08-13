@@ -9,13 +9,9 @@ type ReplaceReturnType<T extends (...a: any) => any, TNewReturn> = (
   ...a: Parameters<T>
 ) => TNewReturn
 
-type ResetFuncReturnType<Value> =
-  | ReturnType<SetStateActionFunc<Value>>
-  | typeof RESET
-
 type ResetSetStateActionFunc<Value> = ReplaceReturnType<
   SetStateActionFunc<Value>,
-  ResetFuncReturnType<Value>
+  ReturnType<SetStateActionFunc<Value>> | typeof RESET
 >
 
 type StorageSetStateAction<Value> =
